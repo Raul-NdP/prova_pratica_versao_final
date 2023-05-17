@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:prova_pratica_versao_final/componentes/botao.dart';
-import 'package:prova_pratica_versao_final/componentes/textoVariacao.dart';
+import 'package:prova_pratica_versao_final/componentes/componenteItem.dart';
 import 'package:prova_pratica_versao_final/modelos/acoes.dart';
-import 'package:prova_pratica_versao_final/modelos/apiValor.dart';
+import 'package:prova_pratica_versao_final/modelos/financas.dart';
 import 'package:prova_pratica_versao_final/modelos/bitcoins.dart';
 import 'package:prova_pratica_versao_final/modelos/item.dart';
 import 'package:prova_pratica_versao_final/modelos/moedas.dart';
@@ -19,7 +19,7 @@ class PgMoedas extends StatefulWidget {
 
 class _PgMoedasState extends State<PgMoedas> {
 
-  ApiValor financas = ApiValor.iniciar();
+  Financas financas = Financas.iniciar();
 
   Item? dolar;
   Item? euro;
@@ -45,7 +45,7 @@ class _PgMoedasState extends State<PgMoedas> {
 
   _buscarMoedas() async {
     const String urlHgFinancas =
-        "https://api.hgbrasil.com/finance?format=json-cors&key=4c448202";
+        "https://api.hgbrasil.com/finance?format=json-cors&key=c5598964";
     Response resposta = await get(Uri.parse(urlHgFinancas));
     Map cotacao = json.decode(resposta.body);
 
@@ -86,19 +86,8 @@ class _PgMoedasState extends State<PgMoedas> {
     bitcoins= Bitcoins(blockchainInfo, bitStamp, mercadoBitcoin, coinBase, foxBit);
 
     setState(() {
-      financas = ApiValor(moedas, acoes, bitcoins);
+      financas = Financas(moedas, acoes, bitcoins);
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Finanças de Hoje"),
-        backgroundColor: const Color.fromARGB(255, 10, 63, 11),
-      ),
-      body: _criaBody(),
-    );
   }
 
   _irAcoes() {
@@ -114,7 +103,7 @@ class _PgMoedasState extends State<PgMoedas> {
         children: [
           const Center(
             child: Text(
-              "Moedas",
+              "MOEDAS",
               style: TextStyle(fontSize: 20),
             ),
           ),
@@ -132,14 +121,16 @@ class _PgMoedasState extends State<PgMoedas> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextoVariacao(
+                        ComponenteItem(
                             nome: "Dólar",
-                            valor: financas.moedas!.dolar!.valor,
-                            variacao: financas.moedas!.dolar!.variacao),
-                        TextoVariacao(
+                            valor: financas.moedas!.dolar!.valor.toStringAsFixed(4),
+                            variacao: double.parse(financas.moedas!.dolar!.variacao.toStringAsFixed(4)),
+                        ),
+                        ComponenteItem(
                             nome: "Euro",
-                            valor: financas.moedas!.euro!.valor,
-                            variacao: financas.moedas!.euro!.variacao)
+                            valor: financas.moedas!.euro!.valor.toStringAsFixed(4),
+                            variacao: double.parse(financas.moedas!.euro!.variacao.toStringAsFixed(4)),
+                        )
                       ],
                     ),
                   ),
@@ -147,14 +138,16 @@ class _PgMoedasState extends State<PgMoedas> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextoVariacao(
+                        ComponenteItem(
                             nome: "Peso",
-                            valor: financas.moedas!.peso!.valor,
-                            variacao: financas.moedas!.peso!.variacao),
-                        TextoVariacao(
+                            valor: financas.moedas!.peso!.valor.toStringAsFixed(4),
+                            variacao: double.parse(financas.moedas!.peso!.variacao.toStringAsFixed(4)),
+                        ),
+                        ComponenteItem(
                             nome: "Yen",
-                            valor: financas.moedas!.yen!.valor,
-                            variacao: financas.moedas!.yen!.variacao)
+                            valor: financas.moedas!.yen!.valor.toStringAsFixed(4),
+                            variacao: double.parse(financas.moedas!.yen!.variacao.toStringAsFixed(4)),
+                        )
                       ],
                     ),
                   ),
@@ -163,11 +156,23 @@ class _PgMoedasState extends State<PgMoedas> {
             ),
           ),
           Botao(
-            texto: "ir para Ações",
+            texto: "Ir para Ações",
             funcao: _irAcoes,
           )
         ],
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Finanças de Hoje"),
+        backgroundColor: const Color.fromARGB(255, 10, 63, 11),
+      ),
+      body: _criaBody(),
+    );
+  }
+
 }

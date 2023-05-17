@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prova_pratica_versao_final/componentes/botao.dart';
-import 'package:prova_pratica_versao_final/componentes/textoVariacao.dart';
+import 'package:prova_pratica_versao_final/componentes/componenteItem.dart';
 import 'package:prova_pratica_versao_final/modelos/acoes.dart';
-import 'package:prova_pratica_versao_final/modelos/apiValor.dart';
+import 'package:prova_pratica_versao_final/modelos/financas.dart';
 import 'package:prova_pratica_versao_final/modelos/bitcoins.dart';
 import 'package:prova_pratica_versao_final/modelos/moedas.dart';
 
@@ -22,7 +22,7 @@ class _PgAcoesState extends State<PgAcoes> {
   @override
   Widget build(BuildContext context) {
 
-    final financas = ModalRoute.of(context)!.settings.arguments as ApiValor;
+    final financas = ModalRoute.of(context)!.settings.arguments as Financas;
     
     irBitcoin() {
       Navigator.popAndPushNamed(context, "/pgBitcoin", arguments: financas);
@@ -54,18 +54,21 @@ class _PgAcoesState extends State<PgAcoes> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextoVariacao(
+                          ComponenteItem(
                               nome: "IBOVESPA",
-                              valor: financas.acoes!.ibovespa!.valor,
-                              variacao: financas.acoes!.ibovespa!.variacao),
-                          TextoVariacao(
+                              valor: financas.acoes!.ibovespa!.valor.toStringAsFixed(2),
+                              variacao: double.parse(financas.acoes!.ibovespa!.variacao.toStringAsFixed(2)),
+                          ),
+                          ComponenteItem(
                               nome: "NASDAQ",
-                              valor: financas.acoes!.nasdaq!.valor,
-                              variacao: financas.acoes!.nasdaq!.variacao),
-                          TextoVariacao(
+                              valor: financas.acoes!.nasdaq!.valor.toStringAsFixed(2),
+                              variacao: double.parse(financas.acoes!.nasdaq!.variacao.toStringAsFixed(2)),
+                          ),
+                          ComponenteItem(
                               nome: "CAC",
-                              valor: financas.acoes!.cac!.valor,
-                              variacao: financas.acoes!.cac!.variacao),
+                              valor: financas.acoes!.cac!.valor.toStringAsFixed(2),
+                              variacao: double.parse(financas.acoes!.cac!.variacao.toStringAsFixed(2)),
+                          ),
                         ],
                       ),
                     ),
@@ -73,18 +76,21 @@ class _PgAcoesState extends State<PgAcoes> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextoVariacao(
+                          ComponenteItem(
                               nome: "IFIX",
-                              valor: financas.acoes!.ifix!.valor,
-                              variacao: financas.acoes!.ifix!.variacao),
-                          TextoVariacao(
+                              valor: financas.acoes!.ifix!.valor.toStringAsFixed(2),
+                              variacao: double.parse(financas.acoes!.ifix!.variacao.toStringAsFixed(2)),
+                          ),
+                          ComponenteItem(
                               nome: "DOWJONES",
-                              valor: financas.acoes!.dowjones!.valor,
-                              variacao: financas.acoes!.dowjones!.variacao),
-                          TextoVariacao(
+                              valor: financas.acoes!.dowjones!.valor.toStringAsFixed(2),
+                              variacao: double.parse(financas.acoes!.dowjones!.variacao.toStringAsFixed(2)),
+                          ),
+                          ComponenteItem(
                               nome: "NIKKEI",
-                              valor: financas.acoes!.nikkei!.valor,
-                              variacao: financas.acoes!.nikkei!.variacao),
+                              valor: financas.acoes!.nikkei!.valor.toStringAsFixed(2),
+                              variacao: double.parse(financas.acoes!.nikkei!.variacao.toStringAsFixed(2)),
+                          ),
                         ],
                       ),
                     )
@@ -93,7 +99,7 @@ class _PgAcoesState extends State<PgAcoes> {
               ),
             ),
             Botao(
-              texto: "ir para Bitcoin",
+              texto: "Ir para Bitcoin",
               funcao: irBitcoin,
             )
           ],

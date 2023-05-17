@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prova_pratica_versao_final/componentes/botao.dart';
-import 'package:prova_pratica_versao_final/componentes/textoVariacao.dart';
-import 'package:prova_pratica_versao_final/modelos/apiValor.dart';
+import 'package:prova_pratica_versao_final/componentes/componenteItem.dart';
+import 'package:prova_pratica_versao_final/modelos/financas.dart';
 
 class PgBitcoin extends StatefulWidget {
   const PgBitcoin({super.key});
@@ -15,7 +15,7 @@ class _PgBitcoinState extends State<PgBitcoin> {
   @override
   Widget build(BuildContext context) {
 
-    final financas = ModalRoute.of(context)!.settings.arguments as ApiValor;
+    final financas = ModalRoute.of(context)!.settings.arguments as Financas;
 
     irMoedas() {
       Navigator.pop(context);
@@ -46,31 +46,36 @@ class _PgBitcoinState extends State<PgBitcoin> {
                     Expanded(
                         child: Column(
                       children: [
-                        TextoVariacao(
+                        ComponenteItem(
                             nome: "Blockchain.info",
-                            valor: financas.bitcoins!.blockchainInfo!.valor,
-                            variacao: financas.bitcoins!.blockchainInfo!.variacao),
-                        TextoVariacao(
+                            valor: financas.bitcoins!.blockchainInfo!.valor.toStringAsFixed(2),
+                            variacao: double.parse(financas.bitcoins!.blockchainInfo!.variacao.toStringAsFixed(3)),
+                        ),
+                        ComponenteItem(
                             nome: "BitStamp",
-                            valor: financas.bitcoins!.bitStamp!.valor,
-                            variacao: financas.bitcoins!.bitStamp!.variacao),
-                        TextoVariacao(
+                            valor: financas.bitcoins!.bitStamp!.valor.toStringAsFixed(2),
+                            variacao: double.parse(financas.bitcoins!.bitStamp!.variacao.toStringAsFixed(3)),
+                        ),
+                        ComponenteItem(
                             nome: "Mercado Bitcoin",
-                            valor: financas.bitcoins!.mercadoBitcoin!.valor,
-                            variacao: financas.bitcoins!.mercadoBitcoin!.variacao),
+                            valor: financas.bitcoins!.mercadoBitcoin!.valor.toStringAsFixed(2),
+                            variacao: double.parse(financas.bitcoins!.mercadoBitcoin!.variacao.toStringAsFixed(3)),
+                        ),
                       ],
                     )),
                     Expanded(
                         child: Column(
                       children: [
-                        TextoVariacao(
+                        ComponenteItem(
                             nome: "CoinBase",
-                            valor: financas.bitcoins!.coinBase!.valor,
-                            variacao: financas.bitcoins!.coinBase!.variacao),
-                        TextoVariacao(
+                            valor: financas.bitcoins!.coinBase!.valor.toStringAsFixed(2),
+                            variacao: double.parse(financas.bitcoins!.coinBase!.variacao.toStringAsFixed(3)),
+                        ),
+                        ComponenteItem(
                             nome: "FoxBit",
-                            valor: financas.bitcoins!.foxBit!.valor,
-                            variacao: financas.bitcoins!.foxBit!.variacao)
+                            valor: financas.bitcoins!.foxBit!.valor.toStringAsFixed(2),
+                            variacao: double.parse(financas.bitcoins!.foxBit!.variacao.toStringAsFixed(3)),
+                        )
                       ],
                     ))
                   ],

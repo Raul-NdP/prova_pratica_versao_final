@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 
-class TextoVariacao extends StatefulWidget {
+class ComponenteItem extends StatefulWidget {
 
-  final nome;
-  final valor;
-  final variacao;
+  final dynamic nome;
+  final dynamic valor;
+  final dynamic variacao;
 
-  const TextoVariacao({super.key, this.variacao, this.valor, this.nome});
+  const ComponenteItem({super.key, required this.variacao, this.valor, this.nome});
 
   @override
-  State<TextoVariacao> createState() => _TextoVariacaoState();
+  State<ComponenteItem> createState() => _ComponenteItemState();
 }
 
-class _TextoVariacaoState extends State<TextoVariacao> {
+class _ComponenteItemState extends State<ComponenteItem> {
   @override
   Widget build(BuildContext context) {
 
-    Color corContainer = Colors.red;
-    if (widget.variacao > 0) {
-      corContainer = Colors.blue;
-    }
+    Color corContainer = widget.variacao >= 0 ? Colors.blue : Colors.red;
 
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -47,7 +44,9 @@ class _TextoVariacaoState extends State<TextoVariacao> {
                     child: Text(
                       widget.variacao.toString(),
                       style: const TextStyle(
-                        color: Colors.white
+                        fontSize: 10,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
                       ),
                     ),
                   )

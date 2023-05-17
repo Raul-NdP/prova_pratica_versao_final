@@ -5,7 +5,7 @@ class Botao extends StatefulWidget {
   final texto;
   final funcao;
   
-  const Botao({super.key, this.texto = "Botão", this.funcao});
+  const Botao({super.key, this.texto = "", this.funcao});
 
   @override
   State<Botao> createState() => _botaoState();
