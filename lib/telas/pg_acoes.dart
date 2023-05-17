@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prova_pratica_versao_final/componentes/botao.dart';
 import 'package:prova_pratica_versao_final/componentes/componenteItem.dart';
-import 'package:prova_pratica_versao_final/modelos/acoes.dart';
 import 'package:prova_pratica_versao_final/modelos/financas.dart';
-import 'package:prova_pratica_versao_final/modelos/bitcoins.dart';
-import 'package:prova_pratica_versao_final/modelos/moedas.dart';
 
 class PgAcoes extends StatefulWidget {
   const PgAcoes({super.key});
@@ -14,10 +11,6 @@ class PgAcoes extends StatefulWidget {
 }
 
 class _PgAcoesState extends State<PgAcoes> {
-
-  Moedas? moedas;
-  Acoes? acoes;
-  Bitcoins? bitcoins;
 
   @override
   Widget build(BuildContext context) {

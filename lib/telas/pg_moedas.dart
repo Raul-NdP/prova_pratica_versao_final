@@ -5,8 +5,8 @@ import 'package:http/http.dart';
 import 'package:prova_pratica_versao_final/componentes/botao.dart';
 import 'package:prova_pratica_versao_final/componentes/componenteItem.dart';
 import 'package:prova_pratica_versao_final/modelos/acoes.dart';
-import 'package:prova_pratica_versao_final/modelos/financas.dart';
 import 'package:prova_pratica_versao_final/modelos/bitcoins.dart';
+import 'package:prova_pratica_versao_final/modelos/financas.dart';
 import 'package:prova_pratica_versao_final/modelos/item.dart';
 import 'package:prova_pratica_versao_final/modelos/moedas.dart';
 
@@ -45,7 +45,7 @@ class _PgMoedasState extends State<PgMoedas> {
 
   _buscarMoedas() async {
     const String urlHgFinancas =
-        "https://api.hgbrasil.com/finance?format=json-cors&key=c5598964";
+        "https://api.hgbrasil.com/finance?format=json-cors&key=cac7feb8";
     Response resposta = await get(Uri.parse(urlHgFinancas));
     Map cotacao = json.decode(resposta.body);
 
@@ -127,9 +127,9 @@ class _PgMoedasState extends State<PgMoedas> {
                             variacao: double.parse(financas.moedas!.dolar!.variacao.toStringAsFixed(4)),
                         ),
                         ComponenteItem(
-                            nome: "Euro",
-                            valor: financas.moedas!.euro!.valor.toStringAsFixed(4),
-                            variacao: double.parse(financas.moedas!.euro!.variacao.toStringAsFixed(4)),
+                            nome: "Peso",
+                            valor: financas.moedas!.peso!.valor.toStringAsFixed(4),
+                            variacao: double.parse(financas.moedas!.peso!.variacao.toStringAsFixed(4)),
                         )
                       ],
                     ),
@@ -139,9 +139,9 @@ class _PgMoedasState extends State<PgMoedas> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ComponenteItem(
-                            nome: "Peso",
-                            valor: financas.moedas!.peso!.valor.toStringAsFixed(4),
-                            variacao: double.parse(financas.moedas!.peso!.variacao.toStringAsFixed(4)),
+                            nome: "Euro",
+                            valor: financas.moedas!.euro!.valor.toStringAsFixed(4),
+                            variacao: double.parse(financas.moedas!.euro!.variacao.toStringAsFixed(4)),
                         ),
                         ComponenteItem(
                             nome: "Yen",
