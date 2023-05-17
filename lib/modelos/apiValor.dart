@@ -1,64 +1,18 @@
+import 'package:prova_pratica_versao_final/modelos/acoes.dart';
+import 'package:prova_pratica_versao_final/modelos/bitcoins.dart';
+import 'package:prova_pratica_versao_final/modelos/moedas.dart';
+
 class ApiValor {
 
-  double ibovespa = 0;
-  double variacaoIbovespa = 0;
-  double nasdaq = 0;
-  double variacaoNasdaq = 0;
-  double cac = 0;
-  double variacaoCac = 0;
-  double ifix = 0;
-  double variacaoIfix = 0;
-  double dowjones = 0;
-  double variacaoDowjones = 0;
-  double nikkei = 0;
-  double variacaoNikkei = 0;
+  Moedas? moedas;
+  Acoes? acoes;
+  Bitcoins? bitcoins;
 
-  double blockchainInfo;
-  double variacaoBlockchainInfo;
-  double bitStamp;
-  double variacaoBitStamp;
-  double mercadoBitcoin;
-  double variacaoMercadoBitcoin;
-  double coinbase;
-  double variacaoCoinbase;
-  double foxBit ;
-  double variacaoFoxBit;
+  ApiValor(this.moedas, this.acoes, this.bitcoins);
 
-  ApiValor(
-    this.ibovespa,
-    this.variacaoIbovespa,
-    this.nasdaq,
-    this.variacaoNasdaq,
-    this.cac,
-    this.variacaoCac,
-    this.ifix,
-    this.variacaoIfix,
-    this.dowjones,
-    this.variacaoDowjones,
-    this.nikkei,
-    this.variacaoNikkei,
-    this.blockchainInfo,
-    this.variacaoBlockchainInfo,
-    this.bitStamp,
-    this.variacaoBitStamp,
-    this.mercadoBitcoin,
-    this.variacaoMercadoBitcoin,
-    this.coinbase,
-    this.variacaoCoinbase,
-    this.foxBit,
-    this.variacaoFoxBit
-  );
-
-  ApiValor.dois(
-    this.blockchainInfo,
-    this.variacaoBlockchainInfo,
-    this.bitStamp,
-    this.variacaoBitStamp,
-    this.mercadoBitcoin,
-    this.variacaoMercadoBitcoin,
-    this.coinbase,
-    this.variacaoCoinbase,
-    this.foxBit,
-    this.variacaoFoxBit
-  );
+  ApiValor.iniciar() {
+    moedas = Moedas.iniciar();
+    acoes = Acoes.iniciar();
+    bitcoins = Bitcoins.iniciar();
+  }
 }

@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:prova_pratica_versao_final/componentes/botao.dart';
 import 'package:prova_pratica_versao_final/componentes/textoVariacao.dart';
 import 'package:prova_pratica_versao_final/modelos/apiValor.dart';
@@ -14,22 +11,11 @@ class PgBitcoin extends StatefulWidget {
 }
 
 class _PgBitcoinState extends State<PgBitcoin> {
-  dynamic _blockchainInfo = "";
-  dynamic _bitStamp = "";
-  dynamic _mercadoBitcoin = "";
-  dynamic _coinbase = "";
-  dynamic _foxBit = "";
-
-  dynamic _variacaoBlockchainInfo = "";
-  dynamic _variacaoBitStamp = "";
-  dynamic _variacaoMercadoBitcoin = "";
-  dynamic _variacaoCoinbase = "";
-  dynamic _variacaoFoxBit = "";
 
   @override
   Widget build(BuildContext context) {
 
-    final a = ModalRoute.of(context)!.settings.arguments as ApiValor;
+    final financas = ModalRoute.of(context)!.settings.arguments as ApiValor;
 
     irMoedas() {
       Navigator.pop(context);
@@ -62,16 +48,16 @@ class _PgBitcoinState extends State<PgBitcoin> {
                       children: [
                         TextoVariacao(
                             nome: "Blockchain.info",
-                            valor: a.blockchainInfo,
-                            variacao: a.variacaoBlockchainInfo),
+                            valor: financas.bitcoins!.blockchainInfo!.valor,
+                            variacao: financas.bitcoins!.blockchainInfo!.variacao),
                         TextoVariacao(
                             nome: "BitStamp",
-                            valor: a.bitStamp,
-                            variacao: a.variacaoBitStamp),
+                            valor: financas.bitcoins!.bitStamp!.valor,
+                            variacao: financas.bitcoins!.bitStamp!.variacao),
                         TextoVariacao(
                             nome: "Mercado Bitcoin",
-                            valor: a.mercadoBitcoin,
-                            variacao: a.variacaoMercadoBitcoin),
+                            valor: financas.bitcoins!.mercadoBitcoin!.valor,
+                            variacao: financas.bitcoins!.mercadoBitcoin!.variacao),
                       ],
                     )),
                     Expanded(
@@ -79,12 +65,12 @@ class _PgBitcoinState extends State<PgBitcoin> {
                       children: [
                         TextoVariacao(
                             nome: "CoinBase",
-                            valor: a.coinbase,
-                            variacao: a.variacaoCoinbase),
+                            valor: financas.bitcoins!.coinBase!.valor,
+                            variacao: financas.bitcoins!.coinBase!.variacao),
                         TextoVariacao(
                             nome: "FoxBit",
-                            valor: a.foxBit,
-                            variacao: a.variacaoFoxBit)
+                            valor: financas.bitcoins!.foxBit!.valor,
+                            variacao: financas.bitcoins!.foxBit!.variacao)
                       ],
                     ))
                   ],

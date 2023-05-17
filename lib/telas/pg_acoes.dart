@@ -1,10 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:prova_pratica_versao_final/componentes/botao.dart';
 import 'package:prova_pratica_versao_final/componentes/textoVariacao.dart';
+import 'package:prova_pratica_versao_final/modelos/acoes.dart';
 import 'package:prova_pratica_versao_final/modelos/apiValor.dart';
+import 'package:prova_pratica_versao_final/modelos/bitcoins.dart';
+import 'package:prova_pratica_versao_final/modelos/moedas.dart';
 
 class PgAcoes extends StatefulWidget {
   const PgAcoes({super.key});
@@ -14,62 +14,18 @@ class PgAcoes extends StatefulWidget {
 }
 
 class _PgAcoesState extends State<PgAcoes> {
-  dynamic _blockchainInfo = "";
-  dynamic _bitStamp = "";
-  dynamic _mercadoBitcoin = "";
-  dynamic _coinbase = "";
-  dynamic _foxBit = "";
 
-  dynamic _ibovespa = "";
-  dynamic _variacaoIbovespa = "";
-  dynamic _nasdaq = "";
-  dynamic _variacaoNasdaq = "";
-  dynamic _cac = "";
-  dynamic _variacaoCac = "";
-  dynamic _ifix = "";
-  dynamic _variacaoIfix = "";
-  dynamic _dowjones = "";
-  dynamic _variacaoDowjones = "";
-  dynamic _nikkei = "";
-  dynamic _variacaoNikkei = "";
-
-  dynamic _variacaoBlockchainInfo = "";
-  dynamic _variacaoBitStamp = "";
-  dynamic _variacaoMercadoBitcoin = "";
-  dynamic _variacaoCoinbase = "";
-  dynamic _variacaoFoxBit = "";
-
+  Moedas? moedas;
+  Acoes? acoes;
+  Bitcoins? bitcoins;
 
   @override
   Widget build(BuildContext context) {
 
-    final a = ModalRoute.of(context)!.settings.arguments as ApiValor;
+    final financas = ModalRoute.of(context)!.settings.arguments as ApiValor;
     
     irBitcoin() {
-      ApiValor b = ApiValor(
-        a.ibovespa,
-        a.variacaoIbovespa,
-        a.nasdaq,
-        a.variacaoNasdaq,
-        a.cac,
-        a.variacaoCac,
-        a.ifix,
-        a.variacaoIfix,
-        a.dowjones,
-        a.variacaoDowjones,
-        a.nikkei,
-        a.variacaoNikkei,
-        a.blockchainInfo,
-        a.variacaoBlockchainInfo,
-        a.bitStamp,
-        a.variacaoBitStamp,
-        a.mercadoBitcoin,
-        a.variacaoMercadoBitcoin,
-        a.coinbase,
-        a.variacaoCoinbase,
-        a.foxBit,
-        a.variacaoFoxBit);
-      Navigator.popAndPushNamed(context, "/pgBitcoin", arguments: b);
+      Navigator.popAndPushNamed(context, "/pgBitcoin", arguments: financas);
     }
 
     criaBody() {
@@ -100,16 +56,16 @@ class _PgAcoesState extends State<PgAcoes> {
                         children: [
                           TextoVariacao(
                               nome: "IBOVESPA",
-                              valor: a.ibovespa,
-                              variacao: a.variacaoIbovespa),
+                              valor: financas.acoes!.ibovespa!.valor,
+                              variacao: financas.acoes!.ibovespa!.variacao),
                           TextoVariacao(
                               nome: "NASDAQ",
-                              valor: a.nasdaq,
-                              variacao: a.variacaoNasdaq),
+                              valor: financas.acoes!.nasdaq!.valor,
+                              variacao: financas.acoes!.nasdaq!.variacao),
                           TextoVariacao(
                               nome: "CAC",
-                              valor: a.cac,
-                              variacao: a.variacaoCac),
+                              valor: financas.acoes!.cac!.valor,
+                              variacao: financas.acoes!.cac!.variacao),
                         ],
                       ),
                     ),
@@ -119,16 +75,16 @@ class _PgAcoesState extends State<PgAcoes> {
                         children: [
                           TextoVariacao(
                               nome: "IFIX",
-                              valor: a.ifix,
-                              variacao: a.variacaoIfix),
+                              valor: financas.acoes!.ifix!.valor,
+                              variacao: financas.acoes!.ifix!.variacao),
                           TextoVariacao(
                               nome: "DOWJONES",
-                              valor: a.dowjones,
-                              variacao: a.variacaoDowjones),
+                              valor: financas.acoes!.dowjones!.valor,
+                              variacao: financas.acoes!.dowjones!.variacao),
                           TextoVariacao(
                               nome: "NIKKEI",
-                              valor: a.nikkei,
-                              variacao: a.variacaoNikkei),
+                              valor: financas.acoes!.nikkei!.valor,
+                              variacao: financas.acoes!.nikkei!.variacao),
                         ],
                       ),
                     )

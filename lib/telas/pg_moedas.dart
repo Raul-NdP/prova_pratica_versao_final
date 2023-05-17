@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:prova_pratica_versao_final/componentes/botao.dart';
 import 'package:prova_pratica_versao_final/componentes/textoVariacao.dart';
+import 'package:prova_pratica_versao_final/modelos/acoes.dart';
 import 'package:prova_pratica_versao_final/modelos/apiValor.dart';
+import 'package:prova_pratica_versao_final/modelos/bitcoins.dart';
+import 'package:prova_pratica_versao_final/modelos/item.dart';
+import 'package:prova_pratica_versao_final/modelos/moedas.dart';
 
 class PgMoedas extends StatefulWidget {
   const PgMoedas({super.key});
@@ -14,38 +18,77 @@ class PgMoedas extends StatefulWidget {
 }
 
 class _PgMoedasState extends State<PgMoedas> {
-  dynamic _valorDolar = "";
-  dynamic _valorEuro = "";
-  dynamic _valorPeso = "";
-  dynamic _valorYen = "";
-  dynamic _variacaoDolar = "";
-  dynamic _variacaoEuro = "";
-  dynamic _variacaoPeso = "";
-  dynamic _variacaoYen = "";
 
-  dynamic _ibovespa = "";
-  dynamic _variacaoIbovespa = "";
-  dynamic _nasdaq = "";
-  dynamic _variacaoNasdaq = "";
-  dynamic _cac = "";
-  dynamic _variacaoCac = "";
-  dynamic _ifix = "";
-  dynamic _variacaoIfix = "";
-  dynamic _dowjones = "";
-  dynamic _variacaoDowjones = "";
-  dynamic _nikkei = "";
-  dynamic _variacaoNikkei = "";
+  ApiValor financas = ApiValor.iniciar();
 
-  dynamic _blockchainInfo = "";
-  dynamic _variacaoBlockchainInfo = "";
-  dynamic _bitStamp = "";
-  dynamic _variacaoBitStamp = "";
-  dynamic _mercadoBitcoin = "";
-  dynamic _variacaoMercadoBitcoin = "";
-  dynamic _coinbase = "";
-  dynamic _variacaoCoinbase = "";
-  dynamic _foxBit = "";
-  dynamic _variacaoFoxBit = "";
+  Item? dolar;
+  Item? euro;
+  Item? peso;
+  Item? yen;
+
+  Item? blockchainInfo;
+  Item? bitStamp;
+  Item? mercadoBitcoin;
+  Item? coinBase;
+  Item? foxBit;
+
+  Item? ibovespa;
+  Item? ifix;
+  Item? nasdaq;
+  Item? dowjones;
+  Item? cac;
+  Item? nikkei;
+
+  Moedas? moedas;
+  Acoes? acoes;
+  Bitcoins? bitcoins;
+
+  _buscarMoedas() async {
+    const String urlHgFinancas =
+        "https://api.hgbrasil.com/finance?format=json-cors&key=4c448202";
+    Response resposta = await get(Uri.parse(urlHgFinancas));
+    Map cotacao = json.decode(resposta.body);
+
+    dolar = Item("Dólar", cotacao["results"]["currencies"]["USD"]["buy"],
+        cotacao["results"]["currencies"]["USD"]["variation"]);
+    euro = Item("Euro", cotacao["results"]["currencies"]["EUR"]["buy"],
+        cotacao["results"]["currencies"]["EUR"]["variation"]);
+    peso = Item("Peso", cotacao["results"]["currencies"]["ARS"]["buy"],
+        cotacao["results"]["currencies"]["ARS"]["variation"]);
+    yen = Item("Yen", cotacao["results"]["currencies"]["JPY"]["buy"],
+        cotacao["results"]["currencies"]["JPY"]["variation"]);
+    moedas = Moedas(dolar, euro, peso, yen);
+
+    ibovespa = Item("Ibovespa", cotacao["results"]["stocks"]["IBOVESPA"]["points"],
+        cotacao["results"]["stocks"]["IBOVESPA"]["variation"]);
+    ifix = Item("Ifix", cotacao["results"]["stocks"]["IFIX"]["points"],
+        cotacao["results"]["stocks"]["IFIX"]["variation"]);
+    nasdaq = Item("Nasdaq", cotacao["results"]["stocks"]["NASDAQ"]["points"],
+        cotacao["results"]["stocks"]["NASDAQ"]["variation"]);
+    dowjones = Item("Dowjones", cotacao["results"]["stocks"]["DOWJONES"]["points"],
+        cotacao["results"]["stocks"]["DOWJONES"]["variation"]);
+    cac = Item("Cac", cotacao["results"]["stocks"]["CAC"]["points"],
+        cotacao["results"]["stocks"]["CAC"]["variation"]);
+    nikkei = Item("Nikkei", cotacao["results"]["stocks"]["NIKKEI"]["points"],
+        cotacao["results"]["stocks"]["NIKKEI"]["variation"]);
+    acoes = Acoes(ibovespa, nasdaq, cac, ifix, dowjones, nikkei);
+
+    blockchainInfo = Item("Blockchain.info", cotacao["results"]["bitcoin"]["blockchain_info"]["last"],
+        cotacao["results"]["bitcoin"]["blockchain_info"]["variation"]);
+    bitStamp = Item("BitStamp", cotacao["results"]["bitcoin"]["bitstamp"]["last"],
+        cotacao["results"]["bitcoin"]["bitstamp"]["variation"]);
+    mercadoBitcoin = Item("Mercado Bitcoin", cotacao["results"]["bitcoin"]["mercadobitcoin"]["last"],
+        cotacao["results"]["bitcoin"]["mercadobitcoin"]["variation"]);
+    coinBase = Item("CoinBase", cotacao["results"]["bitcoin"]["coinbase"]["last"],
+        cotacao["results"]["bitcoin"]["coinbase"]["variation"]);
+    foxBit = Item("FoxBit", cotacao["results"]["bitcoin"]["foxbit"]["last"],
+        cotacao["results"]["bitcoin"]["foxbit"]["variation"]);
+    bitcoins= Bitcoins(blockchainInfo, bitStamp, mercadoBitcoin, coinBase, foxBit);
+
+    setState(() {
+      financas = ApiValor(moedas, acoes, bitcoins);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,81 +101,8 @@ class _PgMoedasState extends State<PgMoedas> {
     );
   }
 
-  _buscarMoedas() async {
-    const String urlHgFinancas =
-        "https://api.hgbrasil.com/finance?format=json-cors&key=0cd11e94";
-    Response resposta = await get(Uri.parse(urlHgFinancas));
-    Map cotacao = json.decode(resposta.body);
-
-    setState(() {
-      _valorDolar = cotacao["results"]["currencies"]["USD"]["buy"];
-      _valorEuro = cotacao["results"]["currencies"]["EUR"]["buy"];
-      _valorPeso = cotacao["results"]["currencies"]["ARS"]["buy"];
-      _valorYen = cotacao["results"]["currencies"]["JPY"]["buy"];
-
-      _variacaoDolar = cotacao["results"]["currencies"]["JPY"]["variation"];
-      _variacaoEuro = cotacao["results"]["currencies"]["JPY"]["variation"];
-      _variacaoPeso = cotacao["results"]["currencies"]["JPY"]["variation"];
-      _variacaoYen = cotacao["results"]["currencies"]["JPY"]["variation"];
-
-      _blockchainInfo =
-          cotacao["results"]["bitcoin"]["blockchain_info"]["last"];
-      _bitStamp = cotacao["results"]["bitcoin"]["bitstamp"]["last"];
-      _mercadoBitcoin = cotacao["results"]["bitcoin"]["mercadobitcoin"]["last"];
-      _coinbase = cotacao["results"]["bitcoin"]["coinbase"]["last"];
-      _foxBit = cotacao["results"]["bitcoin"]["foxbit"]["last"];
-
-      _variacaoBlockchainInfo =
-          cotacao["results"]["bitcoin"]["blockchain_info"]["variation"];
-      _variacaoBitStamp =
-          cotacao["results"]["bitcoin"]["bitstamp"]["variation"];
-      _variacaoMercadoBitcoin =
-          cotacao["results"]["bitcoin"]["mercadobitcoin"]["variation"];
-      _variacaoCoinbase =
-          cotacao["results"]["bitcoin"]["coinbase"]["variation"];
-      _variacaoFoxBit = cotacao["results"]["bitcoin"]["foxbit"]["variation"];
-
-      _ibovespa = cotacao["results"]["stocks"]["IBOVESPA"]["points"];
-      _ifix = cotacao["results"]["stocks"]["IFIX"]["points"];
-      _nasdaq = cotacao["results"]["stocks"]["NASDAQ"]["points"];
-      _dowjones = cotacao["results"]["stocks"]["DOWJONES"]["points"];
-      _cac = cotacao["results"]["stocks"]["CAC"]["points"];
-      _nikkei = cotacao["results"]["stocks"]["NIKKEI"]["points"];
-
-      _variacaoIbovespa = cotacao["results"]["stocks"]["IBOVESPA"]["variation"];
-      _variacaoIfix = cotacao["results"]["stocks"]["IFIX"]["variation"];
-      _variacaoNasdaq = cotacao["results"]["stocks"]["NASDAQ"]["variation"];
-      _variacaoDowjones = cotacao["results"]["stocks"]["DOWJONES"]["variation"];
-      _variacaoCac = cotacao["results"]["stocks"]["CAC"]["variation"];
-      _variacaoNikkei = cotacao["results"]["stocks"]["NIKKEI"]["variation"];
-    });
-  }
-
   _irAcoes() {
-    ApiValor a = ApiValor(
-        _ibovespa,
-        _variacaoIbovespa,
-        _nasdaq,
-        _variacaoNasdaq,
-        _cac,
-        _variacaoCac,
-        _ifix,
-        _variacaoIfix,
-        _dowjones,
-        _variacaoDowjones,
-        _nikkei,
-        _variacaoNikkei,
-        _blockchainInfo,
-        _variacaoBlockchainInfo,
-        _bitStamp,
-        _variacaoBitStamp,
-        _mercadoBitcoin,
-        _variacaoMercadoBitcoin,
-        _coinbase,
-        _variacaoCoinbase,
-        _foxBit,
-        _variacaoFoxBit);
-    Navigator.pushNamed(context, "/pgAcoes", arguments: a);
+    Navigator.pushNamed(context, "/pgAcoes", arguments: financas);
   }
 
   _criaBody() {
@@ -164,12 +134,12 @@ class _PgMoedasState extends State<PgMoedas> {
                       children: [
                         TextoVariacao(
                             nome: "Dólar",
-                            valor: _valorDolar,
-                            variacao: _variacaoDolar),
+                            valor: financas.moedas!.dolar!.valor,
+                            variacao: financas.moedas!.dolar!.variacao),
                         TextoVariacao(
                             nome: "Euro",
-                            valor: _valorEuro,
-                            variacao: _variacaoEuro)
+                            valor: financas.moedas!.euro!.valor,
+                            variacao: financas.moedas!.euro!.variacao)
                       ],
                     ),
                   ),
@@ -179,12 +149,12 @@ class _PgMoedasState extends State<PgMoedas> {
                       children: [
                         TextoVariacao(
                             nome: "Peso",
-                            valor: _valorPeso,
-                            variacao: _variacaoPeso),
+                            valor: financas.moedas!.peso!.valor,
+                            variacao: financas.moedas!.peso!.variacao),
                         TextoVariacao(
                             nome: "Yen",
-                            valor: _valorYen,
-                            variacao: _variacaoYen)
+                            valor: financas.moedas!.yen!.valor,
+                            variacao: financas.moedas!.yen!.variacao)
                       ],
                     ),
                   ),
